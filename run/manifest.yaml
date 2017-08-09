@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jq-cmd
+spec:
+  replicas: 2
+  revisionHistoryLimit: 4
+  progressDeadlineSeconds: 90
+  template:
+    metadata:
+      labels:
+        app: jq-cmd
+    spec:
+      containers:
+        - name: jq
+          image: us.gcr.io/gliderlabs/jq-cmd:latest
+          ports:
+            - name: ssh
+              containerPort: 2222
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jq-cmd
+spec:
+  type: LoadBalancer
+  selector:
+    app: jq-cmd
+  ports:
+    - name: ssh
+      port: 22
+      targetPort: 2222
