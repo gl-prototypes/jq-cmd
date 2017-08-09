@@ -1,15 +1,20 @@
 package main
 
 import (
-	"io"
 	"log"
+	"os/exec"
 
 	"github.com/gliderlabs/ssh"
 )
 
 func main() {
 	ssh.Handle(func(s ssh.Session) {
-		io.WriteString(s, "Hello world\n")
+		cmd := exec.Command("jq", "--help")
+		out, err := cmd.CombinedOutput()
+		s.Write(out)
+		if err != nil {
+			s.Exit(1)
+		}
 	})
 
 	log.Println("serving on 2222...")
