@@ -13,5 +13,5 @@ func main() {
 	})
 
 	log.Println("serving on 2222...")
-	log.Fatal(ssh.ListenAndServe(":2222", nil))
+	log.Fatal(ssh.ListenAndServe(":2222", nil, ssh.HostKeyFile("/tmp/hostkey")))
 }

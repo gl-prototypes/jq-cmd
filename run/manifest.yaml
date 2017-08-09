@@ -11,12 +11,22 @@ spec:
       labels:
         app: jq-cmd
     spec:
+      volumes:
+        - name: hostkey
+          secret:
+            secretName: jq-cmd
+            items:
+            - key: hostkey
+              path: hostkey
       containers:
         - name: jq
           image: us.gcr.io/gliderlabs/jq-cmd:latest
           ports:
             - name: ssh
               containerPort: 2222
+          volumeMounts:
+            - mountPath: /tmp/
+              name: hostkey
 ---
 kind: Service
 apiVersion: v1
