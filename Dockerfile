@@ -1,5 +1,6 @@
 FROM alpine:3.6
-COPY ./demo /demo
-RUN chmod +x /demo
+RUN apk add -U jq
+COPY ./jqserve /jqserve
+RUN chmod +x /jqserve
 EXPOSE 2222
-ENTRYPOINT ["/demo"]
+ENTRYPOINT ["/jqserve"]

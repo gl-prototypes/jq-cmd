@@ -22,7 +22,7 @@ jobs:
           name: Build Image
           command: |
             docker build -t us.gcr.io/gliderlabs/jq-cmd:build-$CIRCLE_BUILD_NUM .
-            docker tag us.gcr.io/gliderlabs/jq-cmd:build-$CIRCLE_BUILD_NUM us.gcr.io/gliderlabs/gke-pipeline:latest
+            docker tag us.gcr.io/gliderlabs/jq-cmd:build-$CIRCLE_BUILD_NUM us.gcr.io/gliderlabs/jq-cmd:latest
       - run:
           name: Push Image
           command: |
@@ -36,4 +36,4 @@ jobs:
             gcloud config set project gliderlabs
             gcloud container clusters get-credentials gl-demo --zone us-central1-a
             kubectl apply -f run/manifest.yaml
-            kubectl rollout status deployment/gke-pipeline --watch
+            kubectl rollout status deployment/jq-cmd --watch
