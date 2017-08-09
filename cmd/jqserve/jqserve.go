@@ -8,12 +8,13 @@ import (
 )
 
 func main() {
-	ssh.Handle(func(s ssh.Session) {
-		cmd := exec.Command("jq", "--help")
-		out, err := cmd.CombinedOutput()
-		s.Write(out)
-		if err != nil {
-			s.Exit(1)
+	ssh.Handle(func(sess ssh.Session) {
+		cmd := exec.Command("jq", sess.Command()...)
+		cmd.Stdin = sess
+		cmd.Stdout = sess
+		cmd.Stderr = sess.Stderr()
+		if err := cmd.Run(); err != nil {
+			sess.Exit(1)
 		}
 	})
 
