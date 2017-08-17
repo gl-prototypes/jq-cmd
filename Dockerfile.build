@@ -3,5 +3,6 @@ RUN apk add -U git
 COPY . /src
 WORKDIR /src/cmd/jqserve
 RUN go get github.com/gliderlabs/ssh
+RUN go get github.com/gliderlabs/com
 RUN go build
 CMD ["cat", "/src/cmd/jqserve/jqserve"]
